@@ -8,9 +8,12 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# === SIMPAN FILE credentials.json DARI ENV VARIABLE ===
+# ✅ Simpan file credentials.json dari ENV (yang sudah dijadikan dict)
+google_creds_string = os.environ["GOOGLE_CREDS_JSON"]
+google_creds_dict = json.loads(google_creds_string)
+
 with open("credentials.json", "w") as f:
-    json.dump(json.loads(os.environ["GOOGLE_CREDS_JSON"]), f)
+    json.dump(google_creds_dict, f)
 
 # Setup Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]

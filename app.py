@@ -8,13 +8,12 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# Simpan file credentials.json dari ENV
-with open("credentials.json", "w") as f:
-    f.write(os.environ["GOOGLE_CREDS_JSON"])
+# Ambil credentials dari ENV dan ubah jadi dictionary
+keyfile_dict = json.loads(os.environ["GOOGLE_CREDS_JSON"])
 
 # Setup Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+creds = ServiceAccountCredentials.from_json_keyfile_dict(keyfile_dict, scope)
 client = gspread.authorize(creds)
 sheet = client.open("Catatan Keuangan").sheet1
 

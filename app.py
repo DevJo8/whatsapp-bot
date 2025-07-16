@@ -1,3 +1,5 @@
+import os
+import json
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import gspread
@@ -5,6 +7,10 @@ from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 
 app = Flask(__name__)
+
+# === SIMPAN FILE credentials.json DARI ENV VARIABLE ===
+with open("credentials.json", "w") as f:
+    json.dump(json.loads(os.environ["GOOGLE_CREDS_JSON"]), f)
 
 # Setup Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
